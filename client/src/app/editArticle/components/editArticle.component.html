@@ -1,0 +1,11 @@
+<ng-container *ngIf="data$ | async as data">
+  {{ data.isLoading }}
+  <app-loading *ngIf="data.isLoading"></app-loading>
+  <app-article-form
+    *ngIf="data.initialValues"
+    [initialValues]="data.initialValues"
+    [isSubmitting]="data.isSubmitting"
+    [errors]="data.backendErrors"
+    (articleSubmit)="onSubmit($event)"
+  ></app-article-form>
+</ng-container>

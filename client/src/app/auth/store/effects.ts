@@ -95,6 +95,7 @@ export const redirectAfterLoginEffect = createEffect(
     (action$ = inject(Actions), router = inject(Router)) => {
         return action$.pipe(ofType(authActions.loginSuccess),
             tap(() => {
+                console.log("REDIRECT")
                 router.navigateByUrl('/')
             })
         )
