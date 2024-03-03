@@ -41,5 +41,13 @@ export const routes: Routes = [
   //   path: 'articles/:slug/edit',
   //   loadChildren: () => import('../app/editArticle/editArticle.routes').then((m) => m.routes)
   // },
+  {
+    path: 'settings',
+    loadChildren: () => import('../app/settings/settings.routes').then((m) => m.routes)
+  },
+  {
+    path: '**',
+    redirectTo: '/'
+  }
 
 ];

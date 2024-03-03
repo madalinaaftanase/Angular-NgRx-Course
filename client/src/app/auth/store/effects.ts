@@ -8,6 +8,28 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { PersistanceService } from "../../shared/services/persistance.service";
 import { Router } from "@angular/router";
 
+
+export const updateCurrentUserEffect = createEffect(
+    (
+        actions$ = inject(Actions),
+        authService = inject(AuthService), persistanceService = inject(PersistanceService)
+    ) => {
+        return actions$.pipe(
+            ofType(authActions.updateCurrentUser),
+            switchMap(({ currentUserRequest }) => {
+                return authService.updateCurrentUser(currentUserRequest).pipe(
+                    map((currentUser: CurrentUserInterface) => {
+                        return authActions.updateCurrentUserSuccess({ currentUser })
+                    }),
+                    catchError((errorResponse: HttpErrorResponse) => {
+                        return of(authActions.updateCurrentUserFailure({ errors: errorResponse.error.errors }))
+                    })
+                )
+            })
+        )
+    }, { functional: true })
+
+
 export const getCurrentUserEffect = createEffect(
     (
         actions$ = inject(Actions),
@@ -96,6 +118,24 @@ export const redirectAfterLoginEffect = createEffect(
         return action$.pipe(ofType(authActions.loginSuccess),
             tap(() => {
                 console.log("REDIRECT")
+                router.navigateByUrl('/')
+            })
+        )
+    },
+    { functional: true, dispatch: false }
+)
+
+export const logoutEffect = createEffect(
+    (
+        action$ = inject(Actions),
+        router = inject(Router),
+        persistanceService = inject(PersistanceService)
+
+    ) => {
+        return action$.pipe(
+            ofType(authActions.logout),
+            tap(() => {
+                persistanceService.set('accessToken', '');
                 router.navigateByUrl('/')
             })
         )
