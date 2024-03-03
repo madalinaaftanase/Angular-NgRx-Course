@@ -13,3 +13,6 @@ A service that interacts with authentication APIs, handles user authentication, 
 Contains the setup for managing authentication state, including actions, effects, and reducers within the auth folder.
 # Auth Interceptors: 
 Automatically appends authentication tokens to all outgoing HTTP requests, ensuring secure and authenticated access to resources.
+
+![Main](image.png)
+![Settings Profile](image-1.png)
