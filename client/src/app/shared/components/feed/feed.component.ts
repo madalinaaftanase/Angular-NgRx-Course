@@ -12,12 +12,14 @@ import { ErrorMessageComponent } from "../errorMessage/errorMessage.component";
 import { query } from "express";
 import queryString from "query-string";
 import { TagListComponent } from "../tagList/tagList.component";
+import { AddToFavoritesComponent } from "../addToFavorites/addToFavorites.component";
 
 @Component({
     selector: 'app-feed',
     templateUrl: './feed.component.html',
     standalone: true,
-    imports: [CommonModule, RouterLink, LoadingComponent, PaginationComponent, ErrorMessageComponent, TagListComponent]
+    imports: [CommonModule, RouterLink, LoadingComponent, PaginationComponent, ErrorMessageComponent, TagListComponent
+    , AddToFavoritesComponent]
 })
 
 export class FeedComponent implements OnInit, OnChanges {
@@ -45,11 +47,11 @@ export class FeedComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-       const isApiUrlChanged = !changes['apiUrl'].firstChange && changes['apiUrl'].currentValue !==  changes['apiUrl'].previousValue
+        const isApiUrlChanged = !changes['apiUrl'].firstChange && changes['apiUrl'].currentValue !== changes['apiUrl'].previousValue
 
-       if(isApiUrlChanged){
-        this.fetchFeed();
-       }
+        if (isApiUrlChanged) {
+            this.fetchFeed();
+        }
     }
 
     fetchFeed(): void {
