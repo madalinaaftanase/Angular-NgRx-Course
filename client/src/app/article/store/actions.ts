@@ -1,4 +1,5 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
+
 import { ArticleInterface } from "../../shared/types/articles.interface";
 
 export const articleActions = createActionGroup({
@@ -12,4 +13,5 @@ export const articleActions = createActionGroup({
         'Delete article Success': emptyProps(),
         'Delete article Failure': emptyProps()
     }
+    
 })
