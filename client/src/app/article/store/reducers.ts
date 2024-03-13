@@ -3,7 +3,7 @@ import { ArticleStateInterface } from "../types/articleState.interface";
 import { articleActions } from "./actions";
 import { routerNavigatedAction } from "@ngrx/router-store";
 
-const initialState: ArticleStateInterface = {
+export const initialState: ArticleStateInterface = {
     isLoading: false,
     error: null,
     data: null

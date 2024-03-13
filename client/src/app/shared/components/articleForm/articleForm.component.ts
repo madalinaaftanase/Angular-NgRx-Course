@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output, inject } from "@angular
 import { RouterLink } from "@angular/router";
 import { BackendErrorsInterface } from "../../types/backendErrors.interface";
 import { ArticleFormValuesInterface } from "./types/articleFormValues.interface";
-import { FormBuilder,ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ErrorMessageComponent } from "../errorMessage/errorMessage.component";
 import { BackendErrorMessages } from "../backendErrorMessages/backendErrorMessages.component";
 
@@ -24,10 +24,10 @@ export class ArticleFormComponent implements OnInit {
     @Output() articleSubmit = new EventEmitter<ArticleFormValuesInterface>();
 
     form = this.fb.nonNullable.group({
-        title: '',
-        description: '',
-        body: '',
-        tagList: ''
+        title: ['', Validators.required],
+        description: ['', Validators.required],
+        body: ['', Validators.required],
+        tagList: ['', Validators.required]
     });
 
     ngOnInit(): void {
@@ -48,12 +48,17 @@ export class ArticleFormComponent implements OnInit {
     }
 
     onSubmit(): void {
-        const formValue = this.form.getRawValue();
-        const articleFormValues: ArticleFormValuesInterface = {
-            ...formValue,
-            tagList: formValue.tagList.split(' ')
+        if (this.form.valid) {
+            const formValue = this.form.getRawValue();
+            const articleFormValues: ArticleFormValuesInterface = {
+                ...formValue,
+                tagList: formValue.tagList.split(' ')
+            }
+            this.articleSubmit.emit(articleFormValues)
         }
-        this.articleSubmit.emit(articleFormValues)
+        else {
+            console.error("Invalid form")
+        }
     }
 
 }
